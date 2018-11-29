@@ -1,0 +1,5 @@
+model_transfer.pt
+dogImages/*
+haarcascades/*
+images/*
+lfw/*
