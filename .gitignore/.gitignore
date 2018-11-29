@@ -1,0 +1,6 @@
+model_transfer.pt
+dog_app_v7_pytorch.ipynb
+dogImages/*
+haarcascades/*
+images/*
+lfw/*
