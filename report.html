@@ -12715,7 +12715,7 @@ valid_data size 835
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[93]:</div>
+<div class="prompt input_prompt">In&nbsp;[102]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -12820,7 +12820,7 @@ valid_data size 835
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[94]:</div>
+<div class="prompt input_prompt">In&nbsp;[103]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">loaders</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">use_cuda</span><span class="p">):</span>
@@ -12870,10 +12870,10 @@ valid_data size 835
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Test Loss: 3.129682
+<pre>Test Loss: 3.035938
 
 
-Test Accuracy: 33% (278/836)
+Test Accuracy: 33% (283/836)
 </pre>
 </div>
 </div>
@@ -12897,7 +12897,7 @@ Test Accuracy: 33% (278/836)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[104]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## TODO: Specify data loaders</span>
@@ -12919,7 +12919,7 @@ Test Accuracy: 33% (278/836)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[95]:</div>
+<div class="prompt input_prompt">In&nbsp;[105]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">torchvision.models</span> <span class="k">as</span> <span class="nn">models</span>
@@ -12929,10 +12929,11 @@ Test Accuracy: 33% (278/836)
 <span class="kn">from</span> <span class="nn">torch.autograd</span> <span class="k">import</span> <span class="n">Variable</span>
 
 <span class="n">model_transfer</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet18</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
 <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">model_transfer</span><span class="o">.</span><span class="n">parameters</span><span class="p">():</span>
     <span class="n">param</span><span class="o">.</span><span class="n">requires_grad</span> <span class="o">=</span> <span class="kc">False</span>
+    
 <span class="n">num_ftrs</span> <span class="o">=</span> <span class="n">model_transfer</span><span class="o">.</span><span class="n">fc</span><span class="o">.</span><span class="n">in_features</span>
-<span class="c1"># print(num_ftrs)</span>
 <span class="n">model_transfer</span><span class="o">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">num_ftrs</span><span class="p">,</span> <span class="mi">133</span><span class="p">)</span>
 
 <span class="c1"># if GPU is available, move the model to GPU</span>
@@ -12991,11 +12992,11 @@ Test Accuracy: 33% (278/836)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[96]:</div>
+<div class="prompt input_prompt">In&nbsp;[106]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">criterion_transfer</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span> <span class="k">if</span> <span class="n">use_cuda</span> <span class="k">else</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
-<span class="n">optimizer_transfer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model_scratch</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">)</span>
+<span class="n">optimizer_transfer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model_transfer</span><span class="o">.</span><span class="n">fc</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -13014,7 +13015,7 @@ Test Accuracy: 33% (278/836)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[97]:</div>
+<div class="prompt input_prompt">In&nbsp;[107]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># train the model</span>
@@ -13042,133 +13043,134 @@ Test Accuracy: 33% (278/836)
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>validate the model
-Epoch: 1 	Training Loss: 0.000768 	Validation Loss: 0.006167
-Validation loss decreased (inf --&gt; 0.006167).  Saving model ...
+Epoch: 1 	Training Loss: 0.000479 	Validation Loss: 0.002248
+Validation loss decreased (inf --&gt; 0.002248).  Saving model ...
 validate the model
-Epoch: 2 	Training Loss: 0.000767 	Validation Loss: 0.006148
-Validation loss decreased (0.006167 --&gt; 0.006148).  Saving model ...
+Epoch: 2 	Training Loss: 0.000253 	Validation Loss: 0.001704
+Validation loss decreased (0.002248 --&gt; 0.001704).  Saving model ...
 validate the model
-Epoch: 3 	Training Loss: 0.000768 	Validation Loss: 0.006158
+Epoch: 3 	Training Loss: 0.000197 	Validation Loss: 0.001501
+Validation loss decreased (0.001704 --&gt; 0.001501).  Saving model ...
 validate the model
-Epoch: 4 	Training Loss: 0.000767 	Validation Loss: 0.006174
+Epoch: 4 	Training Loss: 0.000174 	Validation Loss: 0.001417
+Validation loss decreased (0.001501 --&gt; 0.001417).  Saving model ...
 validate the model
-Epoch: 5 	Training Loss: 0.000767 	Validation Loss: 0.006141
-Validation loss decreased (0.006148 --&gt; 0.006141).  Saving model ...
+Epoch: 5 	Training Loss: 0.000159 	Validation Loss: 0.001354
+Validation loss decreased (0.001417 --&gt; 0.001354).  Saving model ...
 validate the model
-Epoch: 6 	Training Loss: 0.000768 	Validation Loss: 0.006133
-Validation loss decreased (0.006141 --&gt; 0.006133).  Saving model ...
+Epoch: 6 	Training Loss: 0.000147 	Validation Loss: 0.001332
+Validation loss decreased (0.001354 --&gt; 0.001332).  Saving model ...
 validate the model
-Epoch: 7 	Training Loss: 0.000766 	Validation Loss: 0.006131
-Validation loss decreased (0.006133 --&gt; 0.006131).  Saving model ...
+Epoch: 7 	Training Loss: 0.000140 	Validation Loss: 0.001247
+Validation loss decreased (0.001332 --&gt; 0.001247).  Saving model ...
 validate the model
-Epoch: 8 	Training Loss: 0.000767 	Validation Loss: 0.006142
+Epoch: 8 	Training Loss: 0.000138 	Validation Loss: 0.001277
 validate the model
-Epoch: 9 	Training Loss: 0.000767 	Validation Loss: 0.006151
+Epoch: 9 	Training Loss: 0.000131 	Validation Loss: 0.001350
 validate the model
-Epoch: 10 	Training Loss: 0.000768 	Validation Loss: 0.006139
+Epoch: 10 	Training Loss: 0.000128 	Validation Loss: 0.001174
+Validation loss decreased (0.001247 --&gt; 0.001174).  Saving model ...
 validate the model
-Epoch: 11 	Training Loss: 0.000767 	Validation Loss: 0.006146
+Epoch: 11 	Training Loss: 0.000123 	Validation Loss: 0.001124
+Validation loss decreased (0.001174 --&gt; 0.001124).  Saving model ...
 validate the model
-Epoch: 12 	Training Loss: 0.000767 	Validation Loss: 0.006146
+Epoch: 12 	Training Loss: 0.000122 	Validation Loss: 0.001186
 validate the model
-Epoch: 13 	Training Loss: 0.000768 	Validation Loss: 0.006155
+Epoch: 13 	Training Loss: 0.000120 	Validation Loss: 0.001141
 validate the model
-Epoch: 14 	Training Loss: 0.000767 	Validation Loss: 0.006133
+Epoch: 14 	Training Loss: 0.000118 	Validation Loss: 0.001312
 validate the model
-Epoch: 15 	Training Loss: 0.000768 	Validation Loss: 0.006169
+Epoch: 15 	Training Loss: 0.000112 	Validation Loss: 0.001322
 validate the model
-Epoch: 16 	Training Loss: 0.000767 	Validation Loss: 0.006192
+Epoch: 16 	Training Loss: 0.000114 	Validation Loss: 0.001154
 validate the model
-Epoch: 17 	Training Loss: 0.000767 	Validation Loss: 0.006155
+Epoch: 17 	Training Loss: 0.000112 	Validation Loss: 0.001246
 validate the model
-Epoch: 18 	Training Loss: 0.000768 	Validation Loss: 0.006129
-Validation loss decreased (0.006131 --&gt; 0.006129).  Saving model ...
+Epoch: 18 	Training Loss: 0.000109 	Validation Loss: 0.001300
 validate the model
-Epoch: 19 	Training Loss: 0.000768 	Validation Loss: 0.006121
-Validation loss decreased (0.006129 --&gt; 0.006121).  Saving model ...
+Epoch: 19 	Training Loss: 0.000111 	Validation Loss: 0.001194
 validate the model
-Epoch: 20 	Training Loss: 0.000768 	Validation Loss: 0.006134
+Epoch: 20 	Training Loss: 0.000110 	Validation Loss: 0.001304
 validate the model
-Epoch: 21 	Training Loss: 0.000767 	Validation Loss: 0.006112
-Validation loss decreased (0.006121 --&gt; 0.006112).  Saving model ...
+Epoch: 21 	Training Loss: 0.000108 	Validation Loss: 0.001208
 validate the model
-Epoch: 22 	Training Loss: 0.000768 	Validation Loss: 0.006169
+Epoch: 22 	Training Loss: 0.000106 	Validation Loss: 0.001268
 validate the model
-Epoch: 23 	Training Loss: 0.000767 	Validation Loss: 0.006219
+Epoch: 23 	Training Loss: 0.000109 	Validation Loss: 0.001291
 validate the model
-Epoch: 24 	Training Loss: 0.000768 	Validation Loss: 0.006118
+Epoch: 24 	Training Loss: 0.000105 	Validation Loss: 0.001362
 validate the model
-Epoch: 25 	Training Loss: 0.000767 	Validation Loss: 0.006122
+Epoch: 25 	Training Loss: 0.000109 	Validation Loss: 0.001301
 validate the model
-Epoch: 26 	Training Loss: 0.000768 	Validation Loss: 0.006147
+Epoch: 26 	Training Loss: 0.000099 	Validation Loss: 0.001123
+Validation loss decreased (0.001124 --&gt; 0.001123).  Saving model ...
 validate the model
-Epoch: 27 	Training Loss: 0.000768 	Validation Loss: 0.006152
+Epoch: 27 	Training Loss: 0.000102 	Validation Loss: 0.001316
 validate the model
-Epoch: 28 	Training Loss: 0.000767 	Validation Loss: 0.006142
+Epoch: 28 	Training Loss: 0.000104 	Validation Loss: 0.001121
+Validation loss decreased (0.001123 --&gt; 0.001121).  Saving model ...
 validate the model
-Epoch: 29 	Training Loss: 0.000767 	Validation Loss: 0.006133
+Epoch: 29 	Training Loss: 0.000102 	Validation Loss: 0.001282
 validate the model
-Epoch: 30 	Training Loss: 0.000768 	Validation Loss: 0.006118
+Epoch: 30 	Training Loss: 0.000100 	Validation Loss: 0.001157
 validate the model
-Epoch: 31 	Training Loss: 0.000768 	Validation Loss: 0.006153
+Epoch: 31 	Training Loss: 0.000102 	Validation Loss: 0.001315
 validate the model
-Epoch: 32 	Training Loss: 0.000767 	Validation Loss: 0.006137
+Epoch: 32 	Training Loss: 0.000101 	Validation Loss: 0.001348
 validate the model
-Epoch: 33 	Training Loss: 0.000767 	Validation Loss: 0.006187
+Epoch: 33 	Training Loss: 0.000097 	Validation Loss: 0.001298
 validate the model
-Epoch: 34 	Training Loss: 0.000768 	Validation Loss: 0.006122
+Epoch: 34 	Training Loss: 0.000096 	Validation Loss: 0.001227
 validate the model
-Epoch: 35 	Training Loss: 0.000768 	Validation Loss: 0.006163
+Epoch: 35 	Training Loss: 0.000099 	Validation Loss: 0.001263
 validate the model
-Epoch: 36 	Training Loss: 0.000768 	Validation Loss: 0.006184
+Epoch: 36 	Training Loss: 0.000097 	Validation Loss: 0.001250
 validate the model
-Epoch: 37 	Training Loss: 0.000768 	Validation Loss: 0.006162
+Epoch: 37 	Training Loss: 0.000095 	Validation Loss: 0.001256
 validate the model
-Epoch: 38 	Training Loss: 0.000767 	Validation Loss: 0.006146
+Epoch: 38 	Training Loss: 0.000098 	Validation Loss: 0.001317
 validate the model
-Epoch: 39 	Training Loss: 0.000767 	Validation Loss: 0.006158
+Epoch: 39 	Training Loss: 0.000095 	Validation Loss: 0.001198
 validate the model
-Epoch: 40 	Training Loss: 0.000767 	Validation Loss: 0.006171
+Epoch: 40 	Training Loss: 0.000092 	Validation Loss: 0.001182
 validate the model
-Epoch: 41 	Training Loss: 0.000767 	Validation Loss: 0.006150
+Epoch: 41 	Training Loss: 0.000095 	Validation Loss: 0.001346
 validate the model
-Epoch: 42 	Training Loss: 0.000767 	Validation Loss: 0.006161
+Epoch: 42 	Training Loss: 0.000096 	Validation Loss: 0.001260
 validate the model
-Epoch: 43 	Training Loss: 0.000768 	Validation Loss: 0.006169
+Epoch: 43 	Training Loss: 0.000095 	Validation Loss: 0.001281
 validate the model
-Epoch: 44 	Training Loss: 0.000768 	Validation Loss: 0.006157
+Epoch: 44 	Training Loss: 0.000093 	Validation Loss: 0.001260
 validate the model
-Epoch: 45 	Training Loss: 0.000768 	Validation Loss: 0.006135
+Epoch: 45 	Training Loss: 0.000095 	Validation Loss: 0.001440
 validate the model
-Epoch: 46 	Training Loss: 0.000767 	Validation Loss: 0.006135
+Epoch: 47 	Training Loss: 0.000095 	Validation Loss: 0.001247
 validate the model
-Epoch: 47 	Training Loss: 0.000767 	Validation Loss: 0.006176
+Epoch: 48 	Training Loss: 0.000088 	Validation Loss: 0.001315
 validate the model
-Epoch: 48 	Training Loss: 0.000767 	Validation Loss: 0.006129
+Epoch: 49 	Training Loss: 0.000096 	Validation Loss: 0.001220
 validate the model
-Epoch: 49 	Training Loss: 0.000768 	Validation Loss: 0.006136
+Epoch: 50 	Training Loss: 0.000091 	Validation Loss: 0.001340
 validate the model
-Epoch: 50 	Training Loss: 0.000768 	Validation Loss: 0.006153
+Epoch: 51 	Training Loss: 0.000092 	Validation Loss: 0.001252
 validate the model
-Epoch: 51 	Training Loss: 0.000767 	Validation Loss: 0.006114
+Epoch: 52 	Training Loss: 0.000091 	Validation Loss: 0.001270
 validate the model
-Epoch: 52 	Training Loss: 0.000768 	Validation Loss: 0.006134
+Epoch: 53 	Training Loss: 0.000095 	Validation Loss: 0.001301
 validate the model
-Epoch: 53 	Training Loss: 0.000768 	Validation Loss: 0.006131
+Epoch: 54 	Training Loss: 0.000087 	Validation Loss: 0.001378
 validate the model
-Epoch: 54 	Training Loss: 0.000767 	Validation Loss: 0.006190
+Epoch: 55 	Training Loss: 0.000089 	Validation Loss: 0.001391
 validate the model
-Epoch: 55 	Training Loss: 0.000768 	Validation Loss: 0.006154
+Epoch: 56 	Training Loss: 0.000090 	Validation Loss: 0.001234
 validate the model
-Epoch: 56 	Training Loss: 0.000767 	Validation Loss: 0.006144
+Epoch: 57 	Training Loss: 0.000094 	Validation Loss: 0.001309
 validate the model
-Epoch: 57 	Training Loss: 0.000767 	Validation Loss: 0.006152
+Epoch: 58 	Training Loss: 0.000091 	Validation Loss: 0.001226
 validate the model
-Epoch: 58 	Training Loss: 0.000766 	Validation Loss: 0.006163
+Epoch: 59 	Training Loss: 0.000092 	Validation Loss: 0.001323
 validate the model
-Epoch: 59 	Training Loss: 0.000767 	Validation Loss: 0.006139
-validate the model
-Epoch: 60 	Training Loss: 0.000768 	Validation Loss: 0.006166
+Epoch: 60 	Training Loss: 0.000090 	Validation Loss: 0.001225
 </pre>
 </div>
 </div>
@@ -13188,7 +13190,7 @@ Epoch: 60 	Training Loss: 0.000768 	Validation Loss: 0.006166
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[98]:</div>
+<div class="prompt input_prompt">In&nbsp;[108]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">test</span><span class="p">(</span><span class="n">loaders_transfer</span><span class="p">,</span> <span class="n">model_transfer</span><span class="p">,</span> <span class="n">criterion_transfer</span><span class="p">,</span> <span class="n">use_cuda</span><span class="p">)</span>
@@ -13208,10 +13210,10 @@ Epoch: 60 	Training Loss: 0.000768 	Validation Loss: 0.006166
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Test Loss: 5.146214
+<pre>Test Loss: 0.964115
 
 
-Test Accuracy:  0% ( 1/836)
+Test Accuracy: 73% (618/836)
 </pre>
 </div>
 </div>
@@ -13231,7 +13233,7 @@ Test Accuracy:  0% ( 1/836)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[99]:</div>
+<div class="prompt input_prompt">In&nbsp;[109]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### TODO: Write a function that takes a path to an image as input</span>
@@ -13287,7 +13289,7 @@ Test Accuracy:  0% ( 1/836)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[100]:</div>
+<div class="prompt input_prompt">In&nbsp;[110]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### TODO: Write your algorithm.</span>
@@ -13350,7 +13352,7 @@ Test Accuracy:  0% ( 1/836)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[101]:</div>
+<div class="prompt input_prompt">In&nbsp;[111]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## TODO: Execute your algorithm from Step 6 on</span>
@@ -13393,7 +13395,7 @@ Test Accuracy:  0% ( 1/836)
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Hello Human
 You look like a ...
-092.Keeshond
+127.Silky_terrier
 </pre>
 </div>
 </div>
@@ -13421,7 +13423,7 @@ You look like a ...
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Hello Human
 You look like a ...
-061.English_cocker_spaniel
+127.Silky_terrier
 </pre>
 </div>
 </div>
@@ -13449,7 +13451,7 @@ You look like a ...
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Hello Human
 You look like a ...
-114.Otterhound
+060.Dogue_de_bordeaux
 </pre>
 </div>
 </div>
@@ -13477,7 +13479,7 @@ You look like a ...
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Hello Dog
 You look like a ...
-114.Otterhound
+029.Border_collie
 </pre>
 </div>
 </div>
@@ -13505,7 +13507,7 @@ You look like a ...
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Hello Dog
 You look like a ...
-100.Lowchen
+029.Border_collie
 </pre>
 </div>
 </div>
@@ -13533,7 +13535,7 @@ You look like a ...
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Hello Dog
 You look like a ...
-088.Irish_water_spaniel
+012.Australian_shepherd
 </pre>
 </div>
 </div>
